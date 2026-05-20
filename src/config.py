@@ -4,17 +4,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    SPOTIFY_BASE_URL = os.getenv("SPOTIFY_BASE_URL", "https://api.spotify.com/v1")
+    GITHUB_BASE_URL = os.getenv("GITHUB_BASE_URL", "https://api.github.com")
 
-    SPOTIFY_ENDPOINTS = [
-        "/search",
-        "/tracks/{id}",
-        "/albums/{id}",
-        "/artists/{id}",
-        "/playlists/{id}",
-        "/recommendations",
+    GITHUB_ENDPOINTS = [
+        "/users/{username}",
+        "/repos/{owner}/{repo}",
+        "/search/repositories",
+        "/search/users",
+        "/repos/{owner}/{repo}/issues",
+        "/repos/{owner}/{repo}/commits",
     ]
 
     REQUEST_TIMEOUT = 10
-    RATE_LIMIT_REQUESTS = 50
-    RATE_LIMIT_WINDOW = 30  # segundos
+    RATE_LIMIT_REQUESTS = 60
+    RATE_LIMIT_WINDOW = 60  # segundos

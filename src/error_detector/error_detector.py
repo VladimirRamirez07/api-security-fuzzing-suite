@@ -89,7 +89,7 @@ class ErrorDetector:
 
     def __init__(self, auth_headers: dict):
         self.headers = auth_headers
-        self.base_url = Config.SPOTIFY_BASE_URL
+        self.base_url = Config.GITHUB_BASE_URL
         self.findings: list[ErrorFinding] = []
 
     def _analyze_response(self, endpoint: str, payload: str, response: requests.Response) -> list[ErrorFinding]:

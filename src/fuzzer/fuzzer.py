@@ -64,7 +64,7 @@ class FuzzingEngine:
 
     def __init__(self, auth_headers: dict):
         self.headers = auth_headers
-        self.base_url = Config.SPOTIFY_BASE_URL
+        self.base_url = Config.GITHUB_BASE_URL
         self.results: list[FuzzResult] = []
 
     def _check_info_leak(self, response_body: str) -> bool:

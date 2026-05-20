@@ -20,7 +20,6 @@ class Reporter:
         os.makedirs("results/errors", exist_ok=True)
 
     def save_json(self, data: list, category: str, filename: str = None) -> str:
-        """Guarda resultados en JSON."""
         fname = filename or f"{category}_{self.timestamp}.json"
         path = f"results/{category}/{fname}"
 
@@ -43,7 +42,6 @@ class Reporter:
         rate_results: list,
         error_findings: list,
     ) -> str:
-        """Genera un reporte HTML completo y visual."""
 
         critical = [f for f in error_findings if f.severity == "CRITICAL"]
         high     = [f for f in error_findings if f.severity == "HIGH"]
@@ -98,7 +96,7 @@ class Reporter:
 </head>
 <body>
     <h1>🔐 API Security Fuzzing Report</h1>
-    <p class="meta">Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} &nbsp;|&nbsp; Target: Spotify Web API</p>
+    <p class="meta">Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} &nbsp;|&nbsp; Target: GitHub REST API v3</p>
 
     <h2>📊 Executive Summary</h2>
     <div class="grid">
@@ -134,7 +132,6 @@ class Reporter:
         return path
 
     def print_final_summary(self, error_findings: list):
-        """Imprime resumen final en consola."""
         critical = len([f for f in error_findings if f.severity == "CRITICAL"])
         high     = len([f for f in error_findings if f.severity == "HIGH"])
         medium   = len([f for f in error_findings if f.severity == "MEDIUM"])

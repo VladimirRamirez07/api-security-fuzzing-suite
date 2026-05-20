@@ -1,0 +1,16 @@
+[
+  {
+    "total_requests": 40,
+    "blocked_requests": 0,
+    "successful_requests": 25,
+    "first_block_at": null,
+    "retry_after": null,
+    "rate_limit_headers": {
+      "x-ratelimit-limit": "30",
+      "x-ratelimit-remaining": "0",
+      "x-ratelimit-reset": "1779263870"
+    },
+    "window_seconds": 32.38,
+    "notes": "\u26a0\ufe0f  No rate limiting detected after 40 requests \u2014 possible misconfiguration"
+  }
+]

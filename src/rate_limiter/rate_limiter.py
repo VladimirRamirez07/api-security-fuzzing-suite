@@ -1,6 +1,5 @@
 import requests
 import time
-import threading
 from dataclasses import dataclass
 from rich.console import Console
 from rich.table import Table
@@ -13,9 +12,9 @@ class RateLimitResult:
     total_requests: int
     blocked_requests: int
     successful_requests: int
-    first_block_at: int | None       # En qué request número bloqueó
-    retry_after: int | None          # Segundos que pide esperar
-    rate_limit_headers: dict         # Headers relevantes encontrados
+    first_block_at: int | None
+    retry_after: int | None
+    rate_limit_headers: dict
     window_seconds: float
     notes: str = ""
 
@@ -23,7 +22,6 @@ class RateLimitTester:
     """
     Tests how well an API enforces rate limiting.
     Sends bursts of requests and analyzes when/how the API blocks them.
-    Checks for proper Retry-After headers and rate limit disclosure.
     """
 
     RATE_LIMIT_HEADERS = [
@@ -39,11 +37,10 @@ class RateLimitTester:
 
     def __init__(self, auth_headers: dict):
         self.headers = auth_headers
-        self.base_url = Config.SPOTIFY_BASE_URL
+        self.base_url = Config.GITHUB_BASE_URL
         self.results: list[RateLimitResult] = []
 
     def _extract_rate_headers(self, response: requests.Response) -> dict:
-        """Extrae headers relacionados a rate limiting de la respuesta."""
         found = {}
         for header in self.RATE_LIMIT_HEADERS:
             value = response.headers.get(header)
@@ -58,9 +55,7 @@ class RateLimitTester:
         total_requests: int = 60,
         delay: float = 0.05,
     ) -> RateLimitResult:
-        """
-        Envía una ráfaga de requests y mide cuándo la API empieza a bloquear.
-        """
+
         console.print(f"\n[bold cyan]⚡ Rate Limit Burst Test:[/bold cyan] {endpoint}")
         console.print(f"   Sending [yellow]{total_requests}[/yellow] requests with {delay}s delay\n")
 
@@ -80,7 +75,6 @@ class RateLimitTester:
                     timeout=Config.REQUEST_TIMEOUT,
                 )
 
-                # Capturar headers de rate limit
                 found_headers = self._extract_rate_headers(response)
                 if found_headers:
                     rate_limit_headers.update(found_headers)
@@ -108,10 +102,9 @@ class RateLimitTester:
 
         elapsed = round(time.time() - start_time, 2)
 
-        # Análisis de resultado
         notes = []
         if first_block_at is None:
-            notes.append("⚠️  No rate limiting detected after {total_requests} requests — possible misconfiguration")
+            notes.append(f"⚠️  No rate limiting detected after {total_requests} requests — possible misconfiguration")
         if not rate_limit_headers:
             notes.append("⚠️  No rate limit headers found — poor API transparency")
         if retry_after is None and blocked > 0:
@@ -133,7 +126,6 @@ class RateLimitTester:
         return result
 
     def _print_summary(self, result: RateLimitResult):
-        """Imprime un resumen visual del test."""
         table = Table(title="Rate Limit Test Summary", style="cyan")
         table.add_column("Metric", style="bold white")
         table.add_column("Value", style="yellow")
