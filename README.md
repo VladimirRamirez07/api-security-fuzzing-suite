@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
 ![Security](https://img.shields.io/badge/Focus-API%20Security-red?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+![CI](https://github.com/VladimirRamirez07/api-security-fuzzing-suite/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 ---
